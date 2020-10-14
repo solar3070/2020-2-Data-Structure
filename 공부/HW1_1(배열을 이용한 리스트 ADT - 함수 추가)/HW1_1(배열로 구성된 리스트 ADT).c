@@ -108,7 +108,7 @@ int get_length(ArrayListType *L)
 void replace(ArrayListType *L, int pos, element item)
 {
 	if (pos < 0 || pos >= L->size) 
-		printf("리스트 오버플로우\n");
+		printf("위치 오류\n");
 	else
 		L->array[pos] = item;
 }

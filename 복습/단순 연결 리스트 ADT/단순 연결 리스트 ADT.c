@@ -23,7 +23,7 @@ ListNode* insert_next(ListNode *head, ListNode *pre, element value)
 	return head;
 }
 
-ListNode* insert_first(ListNode *head, int value)
+ListNode* insert_first(ListNode *head, element value)
 {
 	ListNode *newNode = (ListNode *)malloc(sizeof(ListNode));
 	newNode->data = value;
@@ -32,7 +32,7 @@ ListNode* insert_first(ListNode *head, int value)
 	return head;
 }
 
-ListNode* insert_last(ListNode *head, int value)
+ListNode* insert_last(ListNode *head, element value)
 {
 	ListNode *p;
 	ListNode *newNode = (ListNode *)malloc(sizeof(ListNode));
@@ -91,7 +91,7 @@ void print_list(ListNode *head)
 	printf("리스트끝\n");
 } 
 
-ListNode *search(ListNode *head, int x)
+ListNode *search(ListNode *head, element x)
 {
 	ListNode *p;
 	for (p = head; p != NULL; p = p->link)

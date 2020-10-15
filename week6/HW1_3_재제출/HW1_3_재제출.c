@@ -23,7 +23,7 @@ ListNode* insert_next(ListNode *head, ListNode *pre, element value)
 	return head;
 }
 // 리스트 처음에 노드 삽입
-ListNode* insert_first(ListNode *head, element value)
+ListNode* insert_first(ListNode *head, int value)
 {
 	ListNode *newNode = (ListNode *)malloc(sizeof(ListNode));
 	newNode->data = value;
@@ -32,7 +32,7 @@ ListNode* insert_first(ListNode *head, element value)
 	return head;
 }
 // 리스트 마지막에 노드 삽입
-ListNode* insert_last(ListNode *head, element value)
+ListNode* insert_last(ListNode *head, int value)
 {
 	ListNode *p;
 	ListNode *newNode = (ListNode *)malloc(sizeof(ListNode));
@@ -83,15 +83,16 @@ ListNode* delete_last(ListNode *head)
 	return head;
 }
 // 리스트 출력
-void print_list(ListNode *head)
+void display(ListNode *head)
 {
 	ListNode *p;
+	printf("( ");
 	for (p = head; p != NULL; p = p->link)
-		printf("%d->", p->data);
-	printf("리스트끝\n");
+		printf("%d ", p->data);
+	printf(")\n");
 } 
 // 값 검색 후 해당 노드 반환
-ListNode *search(ListNode *head, element x)
+ListNode *search(ListNode *head, int x)
 {
 	ListNode *p;
 	for (p = head; p != NULL; p = p->link)
@@ -197,7 +198,7 @@ ListNode *delete_pos(ListNode *head, int pos)
 	}
 }
 // delete_pos 이용하여 key값을 찾고 해당 값을 가진 노드 삭제
-ListNode *delete_by_key(ListNode *head, element key)
+ListNode *delete_by_key(ListNode *head, int key)
 {
 	ListNode *p = head;
 	int pos = 0;
@@ -208,169 +209,40 @@ ListNode *delete_by_key(ListNode *head, element key)
 		p = p->link;
 		pos++;
 	}
-	printf("%d값을 지닌 노드는 존재하지 않는다\n", key);
+	printf("아이템 %d는 보유하고 있지 않습니다.\n", key);
 	return head;
+}
+// 아이템 추가 함수
+ListNode *add_item(ListNode *phead, int new_item)
+{
+	if (get_total(phead) + new_item > 100)
+		printf("최대 무게(100kg) 초과로 아이템 %d를 추가할 수 없음\n", new_item); 
+	else 
+		phead = insert_first(phead, new_item);
+	return phead;
 }
 
 int main(void)
 {
-	ListNode *list1 = NULL, *list2 = NULL, *list3;
-	element is_in, key, value;
-	int pos;
-	
-	//list1 = 30->20->10->를 만든다. 이때 10, 20, 30의 순으로 노드를 삽입한다.
-	list1 = insert_first(list1, 10);
-	list1 = insert_first(list1, 20);
-	list1 = insert_first(list1, 30);
-	// list1을 출력
-	printf("list1 = ");
-	print_list(list1);
-	
-	//list1의 맨 앞 노드를 삭제한다. 즉, list1 = 20->10->
-	list1 = delete_first(list1);
-	// list1을 출력
-	printf("list1 = ");
-	print_list(list1);
+	ListNode *list = NULL;
+	char choice;
+	int weight;
 
-	//list2 = 11->22->33->44->를 만든다. 이때 11, 22, 33, 44의 순으로 노드를 삽입한다.
-	list2 = insert_last(list2, 11);
-	list2 = insert_last(list2, 22);
-	list2 = insert_last(list2, 33);
-	list2 = insert_last(list2, 44);
-	// list2를 출력
-	printf("list2 = ");
-	print_list(list2);
+	printf("enter a(dd), d(elete) or q(uit): ");
+	scanf("%c", &choice);
 
-	// list2의 맨 뒤 노드를 삭제한다. 즉, list2 = 11->22->33->
-	list2 = delete_last(list2);
-	// list2를 출력
-	printf("list2 = ");
-	print_list(list2);
+	while (choice != 'q') {
+		printf("enter the weight of the item: ");
+		scanf("%d", &weight);
 
-	//list2를 역순으로 바꾼 리스트를 list3가 가리키게 한다. list3 = 33->22->11->를 만든다.
-	list3 = reverse(list2);
-	//list3를 출력한다.
-	printf("list3 = ");
-	print_list(list3);
+		if (choice == 'a') 	
+			list = add_item(list, weight);
+		else
+			list = delete_by_key(list, weight);
+		display(list);
+		while (getchar() != '\n');
 
-	// list1 = 20->10->33->22->11->를 만든다. 즉, list1과 list3를 합쳐서 list1이 가리키게 한다.
-	list1 = concat(list1, list3);
-	//list1을 출력한다. 
-	printf("list1 = ");
-	print_list(list1);
- 
-	printf("\n[새로 추가한 함수 테스트(list1 이용)]\n");
-
-	printf("존재 유무 확인할 값: ");
-	scanf("%d", &is_in);
-	if (is_in_list(list1, is_in))
-		printf("%d은 리스트에 있다\n", is_in);
-	else
-		printf("%d은 리스트에 없다\n", is_in);
-
-	printf("리스트의 노드의 수는 %d\n", get_length(list1));
-
-	printf("리스트의 모든 노드의 합은 %d\n", get_total(list1));
-
-	printf("값을 알고 싶은 노드의 인덱스: ");
-	scanf("%d", &pos);
-	printf("인덱스가 %d인 노드의 값은 %d\n", pos, get_entry(list1, pos));
-	
-	printf("삭제하고 싶은 값: ");
-	scanf("%d", &key);
-	list1 = delete_by_key(list1, key);
-	printf("list1 = ");
-	print_list(list1);
-	
-	printf("값을 넣고 싶은 노드의 인덱스: ");
-	scanf("%d", &pos);
-	printf("넣을 값: ");
-	scanf("%d", &value);
-	list1 = insert_pos(list1, pos, value);
-	printf("list1 = ");
-	print_list(list1);
-	
-	printf("값을 삭제하고 싶은 노드의 인덱스: ");
-	scanf("%d", &pos);
-	list1 = delete_pos(list1, pos);
-	printf("list1 = ");
-	print_list(list1);
-	
-	printf("삭제하고 싶은 값: ");
-	scanf("%d", &key);
-	list1 = delete_by_key(list1, key);
-	printf("list1 = ");
-	print_list(list1);
-} 
-
-
-
-/* 
-
-작성 함수 활용 안했을 때 (insert_next, delete_next, delete_pos)
-
-// pos 위치에 value를 갖는 노드 추가
-ListNode *insert_pos(ListNode *head, int pos, element value)
-{
-	ListNode *newNode = (ListNode *)malloc(sizeof(ListNode));
-	ListNode *prev = head;
-	int i;
-
-	if (pos < 0 || pos > get_length(head)) error("위치 오류"); // pos = get_length(head)일 때 삽입 가능
-
-	if (pos == 0) 
-		head = insert_first(head, value);
-	else {
-		newNode->data = value;
-		for (i = 0; i < pos - 1; i++) // prev가 pos 직전을 가리킴
-			prev = prev->link;
-		newNode->link = prev->link;
-		prev->link = newNode;
+		printf("enter a(dd), d(elete) or q(uit): ");
+		scanf("%c", &choice);
 	}
-	return head;
 }
-
-// pos 위치 노드 삭제
-ListNode *delete_pos(ListNode *head, int pos)
-{
-	ListNode *p = head;
-	ListNode *prev;
-	int i;
-
-	if (pos < 0 || pos >= get_length(head)) error("위치 오류"); // head가 NULL이면 여기서 걸러짐
-
-	if (pos == 0)
-		return delete_first(head); // pos가 정상적으로 입력된다고 가정, 위의 오류문을 지웠을 때 head가 NULL이면 delete_first함수에서 걸러짐
-	else {
-		for (i = 0; i < pos; i++) {
-			prev = p;
-			p = p->link;
-		}
-		prev->link = p->link;
-		free(p);
-	}
-	return head;
-}
-
-// key값을 찾고 해당 값을 가진 노드 삭제
-ListNode *delete_by_key(ListNode *head, int key)
-{
-	ListNode *p = head;
-	ListNode *prev;
-
-	while (p != NULL) {
-		if (p->data == key) 
-			if (p == head) // key가 첫 번째 노드에 있는 경우
-				 return delete_first(head);
-			else {
-				prev->link = p->link;
-				free(p);
-				return head;
-			}
-		prev = p;
-		p = p->link;
-	}
-	printf("%d값을 지닌 노드는 존재하지 않는다\n", key);
-	return head;
-}
-*/

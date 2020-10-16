@@ -199,13 +199,12 @@ ListNode *delete_pos(ListNode *head, int pos)
 // delete_pos 이용하여 key값을 찾고 해당 값을 가진 노드 삭제
 ListNode *delete_by_key(ListNode *head, element key)
 {
-	ListNode *p = head;
+	ListNode *p;
 	int pos = 0;
 
-	while (p != NULL) {
+	for (p = head; p != NULL; p = p->link) {
 		if (p->data == key) 
-				 return delete_pos(head, pos);
-		p = p->link;
+			return delete_pos(head, pos);
 		pos++;
 	}
 	printf("%d값을 지닌 노드는 존재하지 않는다\n", key);
@@ -306,41 +305,44 @@ int main(void)
 
 
 /* 
+작성 함수 활용 안했을 때 
 
-작성 함수 활용 안했을 때 (insert_next, delete_next, delete_pos)
-
-// pos 위치에 value를 갖는 노드 추가
+// insert_first, insert_next 활용 x
 ListNode *insert_pos(ListNode *head, int pos, element value)
 {
 	ListNode *newNode = (ListNode *)malloc(sizeof(ListNode));
-	ListNode *prev = head;
+	ListNode *p = head;
 	int i;
+	newNode->data = value;
 
-	if (pos < 0 || pos > get_length(head)) error("위치 오류"); // pos = get_length(head)일 때 삽입 가능
+	if (pos < 0 || pos > get_length(head)) error("위치 오류"); // pos = get_length(head) 일 때 삽입 가능
 
-	if (pos == 0) 
-		head = insert_first(head, value);
+	if (pos == 0) {
+		newNode->link = head;
+		head = newNode;
+	}
 	else {
-		newNode->data = value;
-		for (i = 0; i < pos - 1; i++) // prev가 pos 직전을 가리킴
-			prev = prev->link;
-		newNode->link = prev->link;
-		prev->link = newNode;
+		for (i = 0; i < pos - 1; i++) // p가 pos 직전을 가리킴
+			p = p->link;
+		newNode->link = p->link;
+		p->link = newNode;
 	}
 	return head;
 }
 
-// pos 위치 노드 삭제
+// delete_first, delete_next 활용 x
 ListNode *delete_pos(ListNode *head, int pos)
 {
-	ListNode *p = head;
 	ListNode *prev;
+	ListNode *p = head;
 	int i;
 
 	if (pos < 0 || pos >= get_length(head)) error("위치 오류"); // head가 NULL이면 여기서 걸러짐
 
-	if (pos == 0)
-		return delete_first(head); // pos가 정상적으로 입력된다고 가정, 위의 오류문을 지웠을 때 head가 NULL이면 delete_first함수에서 걸러짐
+	if (pos == 0) {
+		head = p->link;
+		free(p);
+	}
 	else {
 		for (i = 0; i < pos; i++) {
 			prev = p;
@@ -352,7 +354,7 @@ ListNode *delete_pos(ListNode *head, int pos)
 	return head;
 }
 
-// key값을 찾고 해당 값을 가진 노드 삭제
+// delete_pos 활용 x
 ListNode *delete_by_key(ListNode *head, int key)
 {
 	ListNode *p = head;

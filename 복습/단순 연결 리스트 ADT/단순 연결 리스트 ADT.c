@@ -129,21 +129,35 @@ ListNode *reverse(ListNode *head)
 int main(void)
 {
 	ListNode *head1 = NULL, *head2;
+	ListNode *s; element x; // search 함수 테스트용
 	int i;
+	
 	for (i = 0; i < 5; i++) {
 		head1 = insert_last(head1, i * 10);
 		print_list(head1);
 	}
 	head2 = reverse(head1);
 	print_list(head2);
+
 	//head2 = insert_pos(head2, 1, 99);
 	//print_list(head2);
+
 	head2 = delete_last(head2);
 	print_list(head2);
+
 	head1 = NULL;
 	head1 = insert_first(head1, 100);
 	head1 = insert_first(head1, 200);
 	print_list(head1);
+
 	head1 = concat(head1, head2);
 	print_list(head1);
+
+	printf("search 함수 테스트\n");
+	scanf("%d", &x);
+	s = search(head1, x);
+	if (s == NULL)
+		printf("일치하는 값이 없음\n");
+	else
+		printf("%d\n", s->data);
 } 

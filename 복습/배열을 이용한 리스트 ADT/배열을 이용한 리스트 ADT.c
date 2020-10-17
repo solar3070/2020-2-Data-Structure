@@ -90,3 +90,15 @@ int main(void)
 	
 	return 0;
 } 
+
+/*
+동일 결과
+ArrayListType *list = (ArrayListType *)malloc(sizeof(ArrayListType));
+
+	init(list);
+	insert_pos(list, 0, 10); print_list(list); // 0번째 위치에 10 추가
+	insert_pos(list, 0, 20); print_list(list); // 0번째 위치에 20 추가
+	insert_pos(list, 0, 30); print_list(list); // 0번째 위치에 30 추가
+	insert_last(list, 40); print_list(list); // 맨 끝에 40 추가
+	delete_pos(list, 0); print_list(list); // 0번째 항목 삭제
+*/

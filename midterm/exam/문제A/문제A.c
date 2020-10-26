@@ -51,10 +51,9 @@ ListNode *extract_even_list(ListNode *list) // 이 함수만 작성해서 이 함수만 제출
 			p = newNode;
 			if (q != NULL)
 				q->link = p;
-			else {
+			else 
 				r = newNode;
-				newNode->link = NULL;
-			}
+			newNode->link = NULL;
 		}
 		list = list->link;
 	}
@@ -69,7 +68,7 @@ int main(void) // 변경하지 말라
 
 	scanf("%d", &n);
 	while (n != -1) {
-        		list = insert_last(list, n);
+        list = insert_last(list, n);
 		scanf("%d", &n);
 	}
 

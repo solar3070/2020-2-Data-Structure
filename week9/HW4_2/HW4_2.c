@@ -56,12 +56,12 @@ TreeNode * delete_node(TreeNode * root, int key)
 		root->right = delete_node(root->right, key);
 	else {
 		if (root->left == NULL) {
-			TreeNode * temp = root->right;
+			temp = root->right;
 			free(root);
 			return temp;
 		}
 		else if (root->right == NULL) {
-			TreeNode * temp = root->left;
+			temp = root->left;
 			free(root);
 			return temp;
 		}

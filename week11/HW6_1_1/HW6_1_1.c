@@ -49,6 +49,7 @@ void read_graph(GraphType *g, char *filename)
 		printf("file %s open error!\n", filename);
 		return;
 	}
+
 	fscanf(fp, "%d\n", &g->n);
 	while (fscanf(fp, "%d %d\n", &u, &v) != EOF) {
 		g->adj_mat[u][v] = 1;

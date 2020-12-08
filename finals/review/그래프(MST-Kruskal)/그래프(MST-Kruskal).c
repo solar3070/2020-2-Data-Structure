@@ -1,7 +1,7 @@
 #include <stdio.h>
 #define MAX_VERTICES 100
 
-int parent[MAX_VERTICES];
+int parent[MAX_VERTICES]; // 본인이 속한 집합의 대표 정점을 가지는 배열
 // int num[MAX_VERTICES];
 
 void set_init(int n)

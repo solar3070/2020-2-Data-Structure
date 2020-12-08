@@ -107,10 +107,11 @@ void kruskal(int n) // n은 정점 개수
 	insert_all_edges(&h);
 	set_init(n); // 대표 정점 배열 초기화
 
-	while (edge_accepted < n - 1) {
+	while (edge_accepted < n - 1) { // 0 1 2 3 4: 5번 반복 (간선의 수 = n - 1)
 		e = delete_min_heap(&h); // 가중치가 최소인 element 받음
 		uset = set_find(e.u);
 		vset = set_find(e.v);
+
 		if (uset != vset) { // 대표 정점이 다르다는 것은 서로 속한 집합이 다르다는 것 = 사이클이 생기지 않음
 			printf("(%d %d) %d\n", e.u, e.v, e.key);
 			edge_accepted++;

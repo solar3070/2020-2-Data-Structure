@@ -2,13 +2,15 @@
 #define MAX_VERTICES 100
 
 int parent[MAX_VERTICES];
-int num[MAX_VERTICES];
+// int num[MAX_VERTICES];
 
 void set_init(int n)
 {
 	int i;
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
 		parent[i] = -1;
+//		num[i] = 1;
+	}
 }
 
 int set_find(int vertex)
@@ -23,14 +25,14 @@ int set_find(int vertex)
 
 void set_union(int s1, int s2) 
 {
-	if (num[s1] < num[s2]) {
-		parent[s1] = s2;
-		num[s2] += num[s1];
-	}
-	else {
+//	if (num[s1] < num[s2]) {
+//		parent[s1] = s2;
+//		num[s2] += num[s1];
+//	}
+//	else {
 		parent[s2] = s1;
-		num[s1] += num[s2];
-	}
+//		num[s1] += num[s2];
+//	}
 }
 
 #define MAX_ELEMENT 100
@@ -92,15 +94,15 @@ void insert_heap_edge(HeapType *h, int u, int v, int weight)
 
 void insert_all_edges(HeapType *h)
 {
-	insert_heap_edge(h, 0, 1, 29);
-	insert_heap_edge(h, 1, 2, 16);
-	insert_heap_edge(h, 2, 3, 12);
-	insert_heap_edge(h, 3, 4, 22);
-	insert_heap_edge(h, 4, 5, 27);
-	insert_heap_edge(h, 5, 0, 10);
-	insert_heap_edge(h, 6, 1, 15);
-	insert_heap_edge(h, 6, 3, 18);
-	insert_heap_edge(h, 6, 4, 25);
+	insert_heap_edge(h, 0, 1, 10);
+	insert_heap_edge(h, 0, 3, 20);
+	insert_heap_edge(h, 0, 4, 70);
+	insert_heap_edge(h, 1, 2, 50);
+	insert_heap_edge(h, 1, 3, 30);
+	insert_heap_edge(h, 1, 4, 60);
+	insert_heap_edge(h, 2, 4, 40);
+	insert_heap_edge(h, 2, 5, 90);
+	insert_heap_edge(h, 3, 5, 80);
 }
 
 void kruskal(int n)
@@ -128,5 +130,5 @@ void kruskal(int n)
 
 int main(void)
 {
-	kruskal(7);
+	kruskal(6);
 }

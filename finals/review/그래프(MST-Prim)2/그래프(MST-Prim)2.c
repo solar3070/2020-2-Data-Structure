@@ -41,7 +41,7 @@ void prim(GraphType *g, int s)
 		printf("정점 %d 추가\n", u);
 
 		for (v = 0; v < g->n; v++)
-			if (g->weight[u][v] != INF) // 정점 u와 간선이 있고 
+			if (g->weight[u][v] != INF) // 정점 u와 간선이 있고 (이 조건 없어도 밑에서 걸러짐)
 				if (!selected[v] && g->weight[u][v] < distance[v]) // v가 집합에 없고(사이클 방지), u가 추가된 집합에서 v까지의 거리가 기존 집합에서 v까지의 거리보다 작다면  
 					distance[v] = g->weight[u][v]; // 집합에서의 v까지의 거리 갱신 (g->weight[u][v]은 u와 v의 거리, distance[v]는 집합에서 v까지의 최소 거리)
 	}

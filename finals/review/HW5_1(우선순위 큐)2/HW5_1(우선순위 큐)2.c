@@ -34,15 +34,11 @@ element delete_max_heap(HeapType *h)
 	element item, temp;
 	item = h->heap[1];
 	temp = h->heap[(h->heap_size)--];
-	parent = 1;
-	child = 2;
 
 	while (child <= h->heap_size) {
 		if (child < h->heap_size && h->heap[child].key < h->heap[child + 1].key)
 			child++;
-
 		if (temp.key >= h->heap[child].key) break;
-
 		h->heap[parent] = h->heap[child];
 		parent = child;
 		child *= 2;
@@ -54,7 +50,7 @@ element delete_max_heap(HeapType *h)
 void preorder(HeapType *h, int root)
 {
 	if (root <= h->heap_size) {
-		printf("%d ", h->heap[root]);
+		printf("%d ", h->heap[root].key);
 		preorder(h, root * 2);
 		preorder(h, root * 2 + 1);
 	}
@@ -64,11 +60,11 @@ void print_heap(HeapType *h) // 교수님 코드도 참고 (맨 밑 주석)
 {
 	int i, lf = 2;
 	for (i = 1; i <= h->heap_size; i++) {
-		if (i == lf) {
+		if (lf == i) {
 			printf("\n");
 			lf *= 2;
 		}
-		printf("%d ", h->heap[i]);
+		printf("%d ", h->heap[i].key);
 	}
 	printf("\n");
 }
@@ -79,7 +75,7 @@ int find(HeapType *h, int root, int key)
 		return 0;
 	if (h->heap[root].key == key)
 		return root;
-	else if (h->heap[root].key < key)
+	if (h->heap[root].key < key)
 		return 0;
 	else
 		return MAX(find(h, root * 2, key), find(h, root * 2 + 1, key));
@@ -88,22 +84,20 @@ int find(HeapType *h, int root, int key)
 void print_sorted_value(HeapType heap)
 {
 	int i;
-
-	for (i = heap.heap_size; i > 0; i--) // 이렇게 하면 사이즈 변수를 만들 필요가 x
+	for (i = heap.heap_size; i >= 1; i--)
 		printf("%d ", delete_max_heap(&heap).key);
 	printf("\n");
 }
 
-void modify_priority(HeapType *h, int oldKey, int newKey)
+void modify_priority(HeapType *h, int oldkey, int newkey)
 {
 	int i, child;
-
-	if (newKey == oldKey) return;
-	i = find(h, 1, oldKey);
+	if (oldkey == newkey) return;
+	i = find(h, 1, oldkey);
 	if (i == 0) return;
 
-	if (newKey > oldKey) 
-		while (i != 1 && newKey > h->heap[i / 2].key) { 
+	if (newkey > oldkey) 
+		while (i != 1 && newkey > h->heap[i / 2].key) {
 			h->heap[i] = h->heap[i / 2];
 			i /= 2;
 		}
@@ -112,13 +106,14 @@ void modify_priority(HeapType *h, int oldKey, int newKey)
 		while (child <= h->heap_size) {
 			if (child < h->heap_size && h->heap[child].key < h->heap[child + 1].key)
 				child++;
-			if (newKey >= h->heap[child].key) break;
+			if (newkey >= h->heap[child].key) break;
 			h->heap[i] = h->heap[child];
 			i = child;
 			child *= 2;
 		}
 	}
-	h->heap[i].key = newKey;
+	h->heap[i].key = newkey;
+
 }
 
 int main(void)
